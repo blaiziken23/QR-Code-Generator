@@ -1,4 +1,4 @@
-export const level = [
+export const errorCorrectionLevel = [
   {
     value: "L",
     desc: "Low ",

@@ -1,7 +1,7 @@
 
 const Frame = () => {
   return (
-    <div>Frame</div>
+    <div>in development</div>
   )
 }
 

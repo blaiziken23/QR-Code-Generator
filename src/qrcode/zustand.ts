@@ -3,8 +3,8 @@ import { ImageSettings, QRProps, QRStore } from "./types";
 
 export const initialImageSettings: ImageSettings = {
   src: "",
-  height: 50,
-  width: 50,
+  height: 0,
+  width: 0,
   excavate: true,
   x: undefined,
   y: undefined,
@@ -30,8 +30,8 @@ export const useQRCodeStore = create<QRStore>()((set) => ({
   onChange: (value) =>
     set((state) => ({
       data: {
-        ...state.data, // Keep existing data state
-        ...value, // Update with new settings
+        ...state.data,
+        ...value,
       },
     })),
 }));

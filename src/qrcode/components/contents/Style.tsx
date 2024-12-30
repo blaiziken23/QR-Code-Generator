@@ -9,7 +9,6 @@ const Style = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    console.log(id, value);
     onChange({ [id]: value });
   };
 
@@ -56,6 +55,7 @@ const Style = () => {
               className="w-12"
             />
             <Input
+              id={item.id}
               type={item.type[1]}
               value={item.value}
               onChange={item.onChange}

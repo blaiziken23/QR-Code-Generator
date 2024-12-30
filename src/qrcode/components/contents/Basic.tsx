@@ -10,13 +10,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { QRProps } from "@/qrcode/types";
-import { level } from "@/qrcode/utils/constants";
+import { errorCorrectionLevel } from "@/qrcode/utils/constants";
 import { useQRCodeStore } from "@/qrcode/zustand";
 import { ChangeEvent } from "react";
 
 const Basic = () => {
   const { onChange } = useQRCodeStore();
-  const { size, value } = useQRCodeStore().data;
+  const { size, value, level } = useQRCodeStore().data;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -48,6 +48,7 @@ const Basic = () => {
       <div className="flex flex-col gap-3">
         <Label htmlFor="error">Error Correction Level</Label>
         <Select
+          defaultValue={level}
           onValueChange={(e) => onChange({ level: e as QRProps["level"] })}
         >
           <SelectTrigger className="">
@@ -56,7 +57,7 @@ const Basic = () => {
           <SelectContent id="level" onChange={(e) => console.log(e)}>
             <SelectGroup>
               <SelectLabel>Error Correction level</SelectLabel>
-              {level.map((data, i) => (
+              {errorCorrectionLevel.map((data, i) => (
                 <SelectItem value={data.value} key={i}>
                   {data.desc}
                 </SelectItem>
