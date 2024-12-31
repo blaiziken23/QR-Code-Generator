@@ -3,27 +3,22 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ChangeEvent, useEffect, useState } from "react";
-import { initialImageSettings, useQRCodeStore } from "@/qrcode/zustand";
+import { useQRCodeStore } from "@/qrcode/zustand";
 
 const ImageSettings = () => {
-  const { onChange } = useQRCodeStore();
-  const { imageSettings } = useQRCodeStore().data;
-
+  const { updateQRImageSettings, QRImageSettings } = useQRCodeStore();
   const [isCenter, setIsCenter] = useState<boolean>(true);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    console.log(id, value);
-    onChange({ imageSettings: { ...initialImageSettings, [id]: value } });
+    updateQRImageSettings({ ...QRImageSettings, [id]: value });
   };
 
   useEffect(() => {
     if (!isCenter) {
-      onChange({ imageSettings: { ...initialImageSettings, x: 0, y: 0 } });
+      updateQRImageSettings({ ...QRImageSettings, x: 0, y: 0 });
     } else {
-      onChange({
-        imageSettings: { ...initialImageSettings, x: undefined, y: undefined },
-      });
+      updateQRImageSettings({ ...QRImageSettings, x: undefined, y: undefined });
     }
   }, [isCenter]);
 
@@ -36,10 +31,10 @@ const ImageSettings = () => {
           step={0.05}
           max={1}
           min={0}
-          defaultValue={[imageSettings?.opacity || 0]}
-          value={[imageSettings?.opacity || 0]}
+          defaultValue={[QRImageSettings?.opacity || 0]}
+          value={[QRImageSettings?.opacity || 0]}
           onValueChange={(e) =>
-            onChange({ imageSettings: { ...initialImageSettings, opacity: e[0] } })
+            updateQRImageSettings({ ...QRImageSettings, opacity: e[0] })
           }
         />
       </div>
@@ -50,11 +45,13 @@ const ImageSettings = () => {
           step={1}
           max={150}
           min={50}
-          defaultValue={[imageSettings?.opacity || 50]}
-          value={[imageSettings?.height || initialImageSettings?.width || 50]}
+          defaultValue={[QRImageSettings?.opacity || 50]}
+          value={[QRImageSettings?.height || QRImageSettings?.width || 50]}
           onValueChange={(e) =>
-            onChange({
-              imageSettings: { ...initialImageSettings, height: e[0], width: e[0] },
+            updateQRImageSettings({
+              ...QRImageSettings,
+              height: e[0],
+              width: e[0],
             })
           }
         />
@@ -67,7 +64,7 @@ const ImageSettings = () => {
               type="number"
               id="x"
               placeholder="X axis"
-              value={imageSettings?.x}
+              value={QRImageSettings?.x}
               onChange={handleChange}
             />
           </div>
@@ -77,7 +74,7 @@ const ImageSettings = () => {
               type="number"
               id="y"
               placeholder="Y axis"
-              value={imageSettings?.y}
+              value={QRImageSettings?.y}
               onChange={handleChange}
             />
           </div>
@@ -88,9 +85,11 @@ const ImageSettings = () => {
           <Label htmlFor="excavate">Excavate</Label>
           <Checkbox
             id="excavate"
+            defaultChecked={QRImageSettings.excavate}
             onCheckedChange={(value) =>
-              onChange({
-                imageSettings: { ...initialImageSettings, excavate: !value },
+              updateQRImageSettings({
+                ...QRImageSettings,
+                excavate: !value,
               })
             }
           />
