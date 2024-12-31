@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import { ImageSettings, QRProps, QRStore } from "./types";
+import { ImageSettingsProps, QRProps, QRStore } from "./types";
 
-export const initialImageSettings: ImageSettings = {
+export const initialImageSettings: ImageSettingsProps = {
   src: "",
-  height: 0,
-  width: 0,
-  excavate: true,
+  height: 50,
+  width: 50,
+  excavate: false,
   x: undefined,
   y: undefined,
   opacity: 1,
@@ -22,15 +22,24 @@ export const initialValue: QRProps = {
   title: "",
   minVersion: 1,
   boostLevel: true,
-  imageSettings: initialImageSettings,
 };
 
 export const useQRCodeStore = create<QRStore>()((set) => ({
-  data: initialValue,
-  onChange: (value) =>
+  QRdata: initialValue,
+  QRImageSettings: initialImageSettings,
+
+  updateQRdata: (value) =>
     set((state) => ({
-      data: {
-        ...state.data,
+      QRdata: {
+        ...state.QRdata,
+        ...value,
+      },
+    })),
+
+  updateQRImageSettings: (value) =>
+    set((state) => ({
+      QRImageSettings: {
+        ...state.QRImageSettings,
         ...value,
       },
     })),

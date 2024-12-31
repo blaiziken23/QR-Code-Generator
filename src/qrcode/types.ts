@@ -1,7 +1,7 @@
 type ErrorCorrectionLevel = "L" | "M" | "Q" | "H";
 type CrossOrigin = "anonymous" | "use-credentials" | "" | undefined;
 
-export type ImageSettings = {
+export type ImageSettingsProps = {
   /**
    * The URI of the embedded image.
    */
@@ -111,10 +111,13 @@ export type QRProps = {
   /**
    * The settings for the embedded image.
    */
-  imageSettings?: ImageSettings;
 };
 
 export type QRStore = {
-  data: QRProps;
-  onChange: (data: Partial<QRProps>) => void;
+  QRdata: QRProps;
+  QRImageSettings: ImageSettingsProps;
+
+  // Actions 
+  updateQRdata: (data: QRProps) => void;
+  updateQRImageSettings: (imageSettings: ImageSettingsProps) => void;
 };
