@@ -4,12 +4,12 @@ import { useQRCodeStore } from "@/qrcode/zustand";
 import { ChangeEvent } from "react";
 
 const Style = () => {
-  const { onChange } = useQRCodeStore();
-  const { marginSize, bgColor, fgColor } = useQRCodeStore().data;
+  const { updateQRdata, QRdata } = useQRCodeStore();
+  const { marginSize, bgColor, fgColor } = useQRCodeStore().QRdata;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    onChange({ [id]: value });
+    updateQRdata({ ...QRdata, [id]: value });
   };
 
   const InputColorItems = [

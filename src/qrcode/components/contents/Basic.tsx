@@ -15,12 +15,12 @@ import { useQRCodeStore } from "@/qrcode/zustand";
 import { ChangeEvent } from "react";
 
 const Basic = () => {
-  const { onChange } = useQRCodeStore();
-  const { size, value, level } = useQRCodeStore().data;
+  const { updateQRdata, QRdata } = useQRCodeStore();
+  const { size, value, level } = useQRCodeStore().QRdata;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    onChange({ [id]: value });
+    updateQRdata({ ...QRdata, [id]: value });
   };
 
   return (
@@ -40,6 +40,7 @@ const Basic = () => {
         <Input
           type="number"
           id="size"
+          min={300}
           placeholder="Size"
           value={size}
           onChange={handleChange}
@@ -49,7 +50,9 @@ const Basic = () => {
         <Label htmlFor="error">Error Correction Level</Label>
         <Select
           defaultValue={level}
-          onValueChange={(e) => onChange({ level: e as QRProps["level"] })}
+          onValueChange={(e) =>
+            updateQRdata({ ...QRdata, level: e as QRProps["level"] })
+          }
         >
           <SelectTrigger className="">
             <SelectValue placeholder="Select a level" />

@@ -1,11 +1,11 @@
 import GradientBg from "./qrcode/components/GradientBg";
 import Headline from "./qrcode/components/Headline";
 import Generator from "./qrcode/components/Generator";
-import SvgEffects from "./qrcode/components/SvgEffects";  
+import SvgEffects from "./qrcode/components/SvgEffects";
 
 function App() {
   return (
-    <div className="relative h-screen">
+    <div className="relative h-auto ">
       <SvgEffects />
       <GradientBg />
       <div className="relative z-10">

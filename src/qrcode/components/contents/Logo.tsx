@@ -5,14 +5,17 @@ import {
   FileUploaderItem,
 } from "@/components/ui/file-upload";
 import { Label } from "@/components/ui/label";
-import { initialImageSettings, useQRCodeStore } from "@/qrcode/zustand";
+import { useQRCodeStore } from "@/qrcode/zustand";
 import { CloudUpload, Paperclip } from "lucide-react";
 import { useEffect, useState } from "react";
 import ImageSettings from "./ImageSettings";
 
 const Logo = () => {
-  const { onChange } = useQRCodeStore();
-  const { imageSettings } = useQRCodeStore().data;
+  const {
+    updateQRdata: onChange,
+    updateQRImageSettings,
+    QRImageSettings,
+  } = useQRCodeStore();
   const [files, setFiles] = useState<File[] | null>(null);
 
   const dropZoneConfig = {
@@ -27,12 +30,7 @@ const Logo = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         if (typeof e.target?.result === "string") {
-          onChange({
-            imageSettings: {
-              ...initialImageSettings,
-              src: e?.target?.result,
-            },
-          });
+          updateQRImageSettings({ ...QRImageSettings, src: e.target.result });
         }
       };
 
@@ -40,7 +38,7 @@ const Logo = () => {
     }
   }, [files, onChange]);
 
-  console.log(files?.length);
+  // console.log(imageSettings);
   return (
     <div className="space-y-4">
       <div className="flex flex-col gap-3">
@@ -78,7 +76,7 @@ const Logo = () => {
           </FileUploaderContent>
         </FileUploader>
       </div>
-      {imageSettings?.src && files && files?.length !== 0 ? (
+      {QRImageSettings?.src || (files && files?.length !== 0) ? (
         <ImageSettings />
       ) : null}
     </div>
